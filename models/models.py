@@ -1,51 +1,99 @@
-from datetime import datetime
+from __future__ import annotations
+from enum import Enum
+from typing import List, Optional, Literal
 from pydantic import BaseModel
-from typing import List
-
-
-class Start(BaseModel):
-    duels: list
-    just_slave: bool
-    me: "User"
-    share_url: str
-    slaves: List["User"]
-    slaves_profit_per_min: int
-    steps: bool
-
-
-class User(BaseModel):
-    balance: int
-    chicken_mark: bool
-    chicken_mark_clean: int
-    duel_count: int
-    duel_reject: int
-    duel_win: int
-    fetter_hour: int
-    fetter_price: int
-    fetter_to: datetime
-    id: int
-    item_type: str
-    job: "Job"
-    master_id: int
-    price: int
-    profit_per_min: int
-    rating_position: int
-    sale_price: int
-    slaves_count: int
-    slaves_profit_per_min: int
-    steps_at: int
-    was_in_app: bool
 
 
 class Job(BaseModel):
-    name: str
+    name: Optional[str] = None
 
 
-class TopItem(BaseModel):
-    id: int
-    slaves_count: int
+class DuelAcceptResponse(BaseModel):
+    win: Optional[bool] = None
+    balance: Optional[int] = None
 
 
-Start.update_forward_refs()
-User.update_forward_refs()
-Job.update_forward_refs()
+class DuelRejectResponse(BaseModel):
+    chicken_mark_clean: Optional[int] = None
+
+
+class ItemType(Enum):
+    user = "user"
+    group = "group"
+
+
+class User(BaseModel):
+    item_type: Optional[ItemType] = None
+    id: Optional[int] = None
+    job: Optional[Job] = None
+    master_id: Optional[int]
+    profit_per_min: Optional[int] = None
+    fetter_to: Optional[int] = None
+    fetter_price: Optional[int]
+    sale_price: Optional[int]
+    chicken_mark: Optional[bool] = None
+    price: Optional[int]
+    balance: Optional[int] = None
+    duel_count: Optional[int]
+    duel_win: Optional[int] = None
+    duel_reject: Optional[int] = None
+    chicken_mark_clean: Optional[int]
+    slaves_count: Optional[int] = None
+    rating_position: Optional[int] = None
+    slaves_profit_per_min: Optional[int]
+
+
+class Duel(BaseModel):
+    id: Optional[int] = None
+    user_id: Optional[int] = None
+    price: Optional[int] = None
+    created_at: Optional[int] = None
+
+
+class TransactionType(Enum):
+    buy_slave = "buy_slave"
+    transfer_to_user = "transfer_to_user"
+    other = "other"
+
+
+class Transaction(BaseModel):
+    id: Optional[str] = None
+    type: Optional[TransactionType] = None
+    text: Optional[str] = None
+    object_id: Optional[int] = None
+    created_at: Optional[int] = None
+    amount: Optional[int] = None
+
+
+class TransferRequest(BaseModel):
+    user_id: Optional[int] = None
+    amount: Optional[int] = None
+
+
+RpsTypes = Literal["rock", "paper", "scissors"]
+
+
+class RpsType(Enum):
+    rock = "rock"
+    paper = "paper"
+    scissors = "scissors"
+
+
+class CreateDuelRequest(BaseModel):
+    user_id: Optional[int] = None
+    amount: Optional[int] = None
+    rps_type: Optional[RpsType] = None
+
+
+class TopResponseItem(BaseModel):
+    id: Optional[int] = None
+    slaves_count: Optional[int] = None
+
+
+class StartResponse(BaseModel):
+    me: Optional[User] = None
+    share_url: Optional[str] = None
+    duels: Optional[List[Duel]] = None
+    slaves: Optional[List[User]] = None
+    slaves_profit_per_min: Optional[int] = None
+    just_slave: Optional[bool] = None
