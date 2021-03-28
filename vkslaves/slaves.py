@@ -130,13 +130,15 @@ class Slaves:
         req = await self.request("POST", "sellSlave", {"slave_id": slave_id})
         return User(**req)
 
-    async def start(self) -> StartResponse:
+    async def start(self, post=0) -> StartResponse:
         """Start app request
+
+        :param int post: Referral id
 
         :return StartResponse:
         """
         self._log.debug("Updating data")
-        req = StartResponse(**(await self.request("GET", "start")))
+        req = StartResponse(**(await self.request("GET", "start", {"post": post})))
         self.me = req.me
         self.slaves = req.slaves
         return req
