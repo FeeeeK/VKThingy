@@ -5,10 +5,14 @@ Asynchronous api wrapper for the game from vk.com called "slaves"
 ```python
 import asyncio
 from vkslaves import Slaves
+
 slaves_api = Slaves(app_auth="vk_access_token_settings=friends,status&vk_app_id=7794757...")
 
+
 async def main():
-    print(slaves_api.me.balancr) 
+    await slaves_api.start()
+
+    print(slaves_api.me.balance)
     user = slaves_api.user(id=1) # get info about vk.com/id1
     print(user.master_id) # get id of user's master
 
