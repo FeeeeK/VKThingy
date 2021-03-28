@@ -1,18 +1,16 @@
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
-
+from setuptools import setup, find_packages
 
 setup(
     name="VKSlaves",
-    version="1.0.0",
+    version="1.0.2",
     author="FeeeeK (@f_ee_k)",
     license="gpl-3.0",
+    url="https://github.com/feeeek/vkslaves",
     description="Asynchronous api wrapper for the game from vk.com called 'slaves'",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    packages=["vkslaves", "vkslaves.models"],
+    packages=find_packages(),
+    install_requires=open("requirements.txt").read().split(),
     keywords=["vk-slaves", "slaves", "vk", "vkslaves_bot"],
-    install_requires=open('./requirements.txt').read().split()
+    include_package_data=True,
 )
