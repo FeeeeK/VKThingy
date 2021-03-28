@@ -124,7 +124,7 @@ class Slaves:
 
         :param int slave_id: ID of slave you want to sell
 
-        :retrun User:
+        :return User:
         """
         self._log.debug(f"Selling {slave_id}")
         req = await self.request("POST", "sellSlave", {"slave_id": slave_id})
@@ -161,18 +161,19 @@ class Slaves:
         req = await self.request("GET", "topUsers")
         return [TopResponseItem(**item) for item in req["list"]]
 
-    async def transations(self) -> List[Transaction]:
-        """Get your transations
+    async def transactions(self) -> List[Transaction]:
+        """Get your transactions
 
         :return List[Transaction]:
         """
-        req = await self.request("GET", "transations")
+        req = await self.request("GET", "transactions")
         return [Transaction(**item) for item in req["list"]]
 
     async def transfer_money(self, id: int, amount: int) -> BalanceResponse:
         """Give your money to other user
 
         :param int id: User id
+        :param int amount: Amount to transfer
 
         :return BalanceResponse: Your balance
         """
