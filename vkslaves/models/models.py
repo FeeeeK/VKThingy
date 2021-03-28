@@ -21,7 +21,7 @@ class DuelRejectResponse(BaseModel):
     chicken_mark_clean: Optional[int] = None
 
 
-class ItemType(Enum):
+class ItemType(str, Enum):
     user = "user"
     group = "group"
 
@@ -54,7 +54,7 @@ class Duel(BaseModel):
     created_at: Optional[int] = None
 
 
-class TransactionType(Enum):
+class TransactionType(str, Enum):
     buy_slave = "buy_slave"
     transfer_to_user = "transfer_to_user"
     other = "other"
@@ -77,7 +77,7 @@ class TransferRequest(BaseModel):
 RpsTypes = Literal["rock", "paper", "scissors"]
 
 
-class RpsType(Enum):
+class RpsType(str, Enum):
     rock = "rock"
     paper = "paper"
     scissors = "scissors"
@@ -101,3 +101,6 @@ class StartResponse(BaseModel):
     slaves: Optional[List[User]] = None
     slaves_profit_per_min: Optional[int] = None
     just_slave: Optional[bool] = None
+
+
+StartResponse.update_forward_refs()
