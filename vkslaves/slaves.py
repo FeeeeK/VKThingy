@@ -17,6 +17,7 @@ from .models import (
 import logging
 
 API_URL = "https://pixel.w84.vkforms.ru/HappySanta/slaves/1.0.0/"
+PROD_SERVER = "https://prod-app7794757-65911b7231ba.pages-ac.vk-apps.com"
 
 
 class Slaves:
@@ -204,6 +205,8 @@ class Slaves:
             "authorization": "Bearer " + self.app_auth,
             "content_type": "application/json",
             "user-agent": self.user_agent.random_agent("desktop", "windows"),
+            "origin": PROD_SERVER,
+            "referer": PROD_SERVER,
         }
         async with aiohttp.ClientSession(headers=headers) as session:
             async with session.request("OPTIONS", API_URL + path):
