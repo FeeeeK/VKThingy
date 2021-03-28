@@ -8,6 +8,10 @@ class Job(BaseModel):
     name: Optional[str] = None
 
 
+class BalanceResponse(BaseModel):
+    balance: Optional[int] = None
+
+
 class DuelAcceptResponse(BaseModel):
     win: Optional[bool] = None
     balance: Optional[int] = None

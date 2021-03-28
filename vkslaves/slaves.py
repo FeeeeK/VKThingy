@@ -1,7 +1,8 @@
 import aiohttp
 from typing import List, Optional
 
-from models import (
+from random_useragent.random_useragent import Randomize
+from .models import (
     User,
     TopResponseItem,
     StartResponse,
@@ -19,12 +20,9 @@ API_URL = "https://pixel.w84.vkforms.ru/HappySanta/slaves/1.0.0/"
 
 
 class Slaves:
-    def __init__(self, app_auth: str, user_agent: str = None) -> None:
+    def __init__(self, app_auth: str) -> None:
         self.app_auth = app_auth
-        self.user_agent = (
-            user_agent
-            or "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.459"
-        )
+        self.user_agent = Randomize()
         self.me: Optional["User"] = None
         self.slaves: Optional[List["User"]] = None
         self._log = logging.getLogger(__name__)
@@ -205,7 +203,7 @@ class Slaves:
         headers = {
             "authorization": "Bearer " + self.app_auth,
             "content_type": "application/json",
-            "user-agent": self.user_agent,
+            "user-agent": self.user_agent.random_agent("desktop", "windows"),
         }
         async with aiohttp.ClientSession(headers=headers) as session:
             async with session.request("OPTIONS", API_URL + path):
@@ -216,3 +214,6 @@ class Slaves:
                     if "error" in res:
                         raise Exception(res["error"])
                     return res
+
+
+__all__ = ["Slaves"]
