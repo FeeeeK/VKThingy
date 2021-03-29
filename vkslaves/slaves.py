@@ -127,7 +127,7 @@ class Slaves:
         :return User:
         """
         self._log.debug(f"Selling {slave_id}")
-        req = await self.request("POST", "sellSlave", {"slave_id": slave_id})
+        req = await self.request("POST", "saleSlave", {"slave_id": slave_id})
         return User(**req)
 
     async def start(self, post=0) -> StartResponse:
