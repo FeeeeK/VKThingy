@@ -119,16 +119,16 @@ class Slaves:
         req = await self.request("GET", "slaveList", {"id": id})
         return [User(**item) for item in req["slaves"]]
 
-    async def sell_slave(self, slave_id: int) -> User:
+    async def sell_slave(self, slave_id: int) -> BalanceResponse:
         """Sell your slave
 
         :param int slave_id: ID of slave you want to sell
 
-        :return User:
+        :return BalanceResponse:
         """
         self._log.debug(f"Selling {slave_id}")
         req = await self.request("POST", "saleSlave", {"slave_id": slave_id})
-        return User(**req)
+        return BalanceResponse(**req)
 
     async def start(self, post=0) -> StartResponse:
         """Start app request
