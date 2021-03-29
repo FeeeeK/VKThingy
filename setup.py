@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="VKSlaves",
-    version="1.0.3",
+    version="1.0.5",
     author="FeeeeK (@f_ee_k)",
     license="gpl-3.0",
     url="https://github.com/feeeek/vkslaves",

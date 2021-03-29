@@ -26,7 +26,7 @@ class Slaves:
         self.user_agent = Randomize()
         self.me: Optional["User"] = None
         self.slaves: Optional[List["User"]] = None
-        self._log = logging.getLogger(__name__)
+        self._log = logging.getLogger("vkslaves")
 
     async def accept_duel(self, id: int, rps_type: RpsTypes) -> DuelAcceptResponse:
         """Accept duel request (rock-paper-scissors game)
