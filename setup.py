@@ -1,8 +1,8 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 setup(
     name="VKSlaves",
-    version="1.0.6",
+    version="1.1.0",
     author="FeeeeK (@f_ee_k)",
     license="gpl-3.0",
     url="https://github.com/feeeek/vkslaves",

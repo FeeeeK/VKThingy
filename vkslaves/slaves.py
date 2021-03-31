@@ -1,31 +1,35 @@
-import aiohttp
+import logging
 from typing import List, Optional
 
+import aiohttp
 from random_useragent.random_useragent import Randomize
+
+from .error_handler import ErrorHandler
 from .models import (
-    User,
-    TopResponseItem,
-    StartResponse,
-    Transaction,
     BalanceResponse,
-    RpsType,
-    RpsTypes,
     Duel,
     DuelAcceptResponse,
     DuelRejectResponse,
+    RpsType,
+    RpsTypes,
+    StartResponse,
+    TopResponseItem,
+    Transaction,
+    User,
 )
-import logging
 
 API_URL = "https://pixel.w84.vkforms.ru/HappySanta/slaves/1.0.0/"
 PROD_SERVER = "https://prod-app7794757-65911b7231ba.pages-ac.vk-apps.com"
 
 
-class Slaves:
+class SlavesAPI:
     def __init__(self, app_auth: str) -> None:
         self.app_auth = app_auth
         self.user_agent = Randomize()
         self.me: Optional["User"] = None
         self.slaves: Optional[List["User"]] = None
+
+        self._error_handler = ErrorHandler
         self._log = logging.getLogger("vkslaves")
 
     async def accept_duel(self, id: int, rps_type: RpsTypes) -> DuelAcceptResponse:
@@ -55,7 +59,7 @@ class Slaves:
 
         :param int slave_id: ID of the user you want to buy
 
-        :return User: Slave data
+        :return User: Your data
         """
         self._log.debug(f"Buying {slave_id}")
         req = await self.request("POST", "buySlave", {"slave_id": slave_id})
@@ -216,10 +220,7 @@ class Slaves:
                 async with session.request(
                     method, API_URL + path, **params
                 ) as response:
-                    res = await response.json()
-                    if "error" in res:
-                        raise Exception(res["error"])
-                    return res
+                    return self._error_handler.check(await response.text())
 
 
-__all__ = ["Slaves"]
+__all__ = ["SlavesAPI"]
