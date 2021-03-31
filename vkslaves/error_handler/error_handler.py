@@ -1,7 +1,7 @@
 import json
 from typing import Any
 
-from errors import (
+from ..errors import (
     AppError,
     BuyFloodError,
     FetterFloodError,
